@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PVI Analyzer · Pro Edition v1.4</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <!-- SheetJS for Excel parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    html { scroll-behavior:smooth; }
+    body { font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .glass {
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.12), rgba(15,23,42,0.9));
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(148,163,184,0.35);
+    }
+    .card {
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.08), rgba(15,23,42,0.9));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(148,163,184,0.3);
+    }
+    .chip {
+      background: linear-gradient(135deg, rgba(59,130,246,0.16), rgba(16,185,129,0.18));
+      border: 1px solid rgba(148,163,184,0.6);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #16a34a, #2563eb);
+    }
+    .table-scrollbar::-webkit-scrollbar {
+      height: 8px;
+    }
+    .table-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .table-scrollbar::-webkit-scrollbar-thumb {
+      background: rgb(55,65,81);
+      border-radius: 9999px;
+    }
+    @keyframes ping-soft {
+      0% { transform: scale(1); opacity: 0.8; }
+      70% { transform: scale(1.25); opacity: 0; }
+      100% { transform: scale(1.25); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-50">
+  <div class="min-h-screen flex flex-col">
+    <!-- Top gradient halo -->
+    <div class="pointer-events-none fixed inset-x-0 -top-40 z-0 flex justify-center overflow-hidden">
+      <div class="h-72 w-[40rem] bg-gradient-to-b from-emerald-400/40 via-sky-500/40 to-transparent opacity-40 blur-3xl"></div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="relative z-10 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-emerald-400 via-sky-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+              <span class="text-lg font-black tracking-tight">P</span>
+            </div>
+            <span class="pointer-events-none absolute -inset-1 rounded-2xl border border-emerald-400/30 opacity-30"></span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-base sm:text-lg font-semibold tracking-tight">PVI Analyzer</h1>
+              <span class="inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-300 ring-1 ring-emerald-500/40">
+                Pro v1.4
+              </span>
+            </div>
+            <p class="text-xs text-slate-400">Performance–Value Index, tuned for outrights.</p>
+          </div>
+        </div>
+        <div class="hidden sm:flex items-center gap-3 text-[10px] text-slate-400">
+          <div class="chip px-2 py-1 rounded-full flex items-center gap-1.5">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Live in-browser
+          </div>
+          <span>•</span>
+          <span>No logins, no uploads for users.</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="relative z-10 flex-1">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <!-- Hero / status -->
+        <section class="mb-6 sm:mb-8">
+          <div class="glass rounded-2xl px-4 sm:px-6 py-4 sm:py-5 shadow-xl shadow-black/40">
+            <div class="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+              <div class="space-y-1">
+                <div class="inline-flex items-center gap-2 rounded-full bg-slate-900/80 px-2.5 py-1 text-[11px] font-medium text-slate-200 ring-1 ring-slate-700/80">
+                  <span class="relative flex h-2 w-2">
+                    <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400/70 opacity-60 animate-[ping-soft_1.7s_ease-out_infinite]"></span>
+                    <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                  </span>
+                  <span>Analyzer workspace</span>
+                </div>
+                <h2 class="text-lg sm:text-2xl font-semibold tracking-tight">Tour field, surfaced instantly.</h2>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-xl">
+                  Data is loaded automatically from <span class="font-mono text-emerald-300 text-[11px]">pvi_tourneys.xlsx</span> in this repo.
+                  Visitors don’t need to upload anything — they just land, scan, and act.
+                </p>
+              </div>
+              <div class="flex flex-col items-start sm:items-end gap-2 text-xs">
+                <div class="card rounded-xl px-3 py-2 flex flex-col gap-1 text-slate-200 min-w-[210px]">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] text-slate-400">Dataset status</span>
+                    <span id="datasetStatusDot" class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
+                  </div>
+                  <div class="flex items-baseline justify-between gap-3">
+                    <div>
+                      <div id="datasetStatusLabel" class="text-sm font-semibold">Idle</div>
+                      <div id="datasetSubStatus" class="text-[11px] text-slate-400">Waiting for workbook…</div>
+                    </div>
+                    <div class="text-right text-[11px] text-slate-400">
+                      <div>Source: <span class="font-mono text-[10px] text-slate-300">/pvi_tourneys.xlsx</span></div>
+                      <div id="datasetMeta" class="mt-0.5 opacity-70">–</div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  id="recalcBtn"
+                  class="btn-primary inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold shadow-lg shadow-emerald-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled
+                >
+                  <span class="material-symbols-outlined text-[14px]">refresh</span>
+                  Re-score from workbook
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hidden upload & controls (for your own testing, not for visitors) -->
+        <section class="mb-4 sm:mb-6">
+          <div class="flex flex-col gap-3">
+            <!-- Hidden file input -->
+            <div class="hidden">
+              <label class="font-semibold text-xs text-slate-300">Upload Excel (.xlsx)</label>
+              <input
+                id="fileInput"
+                type="file"
+                accept=".xlsx"
+                class="mt-1 block w-full text-xs text-slate-300 file:mr-4 file:rounded-full file:border-0 file:bg-slate-800 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-slate-100 hover:file:bg-slate-700"
+              />
+            </div>
+            <div class="text-[11px] text-slate-400">
+              Workbook expectations:
+              <span class="font-mono text-[10px] text-slate-300">Tourneys</span> sheet,
+              repeating <span class="font-mono">Name</span> + <span class="font-mono">PVI</span> pairs per event.
+            </div>
+          </div>
+        </section>
+
+        <!-- Layout: table + metrics -->
+        <section class="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(280px,1.4fr)] gap-4 lg:gap-6 items-start">
+          <!-- Main table -->
+          <div class="card rounded-2xl p-3 sm:p-4 shadow-xl shadow-black/40">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+              <div>
+                <h3 class="text-sm sm:text-base font-semibold tracking-tight">Player leaderboard</h3>
+                <p class="text-[11px] text-slate-400">Click a player to see event-by-event PVI.</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-3 text-[11px]">
+                <div class="flex items-center gap-1">
+                  <label for="sortSelect" class="text-slate-400">Sort by</label>
+                  <select id="sortSelect" class="bg-slate-900/80 border border-slate-700/80 rounded-full px-2.5 py-1 text-[11px] text-slate-100">
+                    <option value="totalPvi">Total PVI</option>
+                    <option value="avgPvi">Avg PVI</option>
+                    <option value="volatility">Volatility (StdDev)</option>
+                    <option value="consistencyIndex">Consistency (CI)</option>
+                    <option value="trendMomentum">Trend Δ (Last3 − Prev3)</option>
+                    <option value="events">Events</option>
+                  </select>
+                </div>
+                <div class="inline-flex items-center gap-1 rounded-full bg-slate-900/80 px-2.5 py-1 ring-1 ring-slate-700/80">
+                  <span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>
+                  <span>≥ 1.0 PVI marked</span>
+                </div>
+              </div>
+            </div>
+            <div class="overflow-x-auto table-scrollbar">
+              <table class="min-w-full text-xs border-separate border-spacing-y-[3px]">
+                <thead class="text-[11px] uppercase tracking-wide text-slate-400">
+                  <tr>
+                    <th class="text-left px-2 py-1.5 font-medium">Player</th>
+                    <th class="text-right px-2 py-1.5 font-medium whitespace-nowrap">✓ ≥1</th>
+                    <th class="text-right px-2 py-1.5 font-medium whitespace-nowrap">Total PVI</th>
+                    <th class="text-right px-2 py-1.5 font-medium whitespace-nowrap">Avg PVI</th>
+                    <th class="text-right px-2 py-1.5 font-medium whitespace-nowrap">Volatility (StdDev)</th>
+                    <th class="text-right px-2 py-1.5 font-medium whitespace-nowrap">Consistency (CI)</th>
+                    <th class="text-right px-2 py-1.5 font-medium whitespace-nowrap">Trend Δ (Last3 − Prev3)</th>
+                    <th class="text-right px-2 py-1.5 font-medium whitespace-nowrap">Events</th>
+                  </tr>
+                </thead>
+                <tbody id="playersBody" class="align-middle text-[11px] text-slate-100"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Metrics / insights -->
+          <div class="space-y-4">
+            <!-- Summary -->
+            <div class="card rounded-2xl p-3 sm:p-4 shadow-xl shadow-black/40">
+              <h3 class="text-sm font-semibold tracking-tight mb-2">Snapshot</h3>
+              <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-[10px] uppercase tracking-wide text-slate-400">Players</span>
+                  <span id="summaryPlayers" class="text-base font-semibold">–</span>
+                  <span id="summaryEvents" class="text-[10px] text-slate-400">–</span>
+                </div>
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-[10px] uppercase tracking-wide text-slate-400">Field quality</span>
+                  <span id="summaryQuality" class="text-base font-semibold">–</span>
+                  <span id="summaryQualityHint" class="text-[10px] text-slate-400">–</span>
+                </div>
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-[10px] uppercase tracking-wide text-slate-400">Top performer</span>
+                  <span id="summaryTopPlayer" class="text-sm font-semibold truncate">–</span>
+                  <span id="summaryTopPvi" class="text-[10px] text-slate-400">–</span>
+                </div>
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-[10px] uppercase tracking-wide text-slate-400">Most consistent</span>
+                  <span id="summaryConsistentPlayer" class="text-sm font-semibold truncate">–</span>
+                  <span id="summaryConsistentMetric" class="text-[10px] text-slate-400">–</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick explanation -->
+            <div class="card rounded-2xl p-3 sm:p-4 shadow-xl shadow-black/40">
+              <h3 class="text-sm font-semibold tracking-tight mb-2">Reading the numbers</h3>
+              <ul class="space-y-1.5 text-[11px] text-slate-300">
+                <li><span class="font-semibold text-emerald-300">Total PVI</span> surfaces who has generated the most value overall relative to price.</li>
+                <li><span class="font-semibold text-sky-300">Avg PVI</span> lets you spot “bang for the buck” on a per start basis.</li>
+                <li><span class="font-semibold text-indigo-300">Consistency Index (CI)</span> = Avg / StdDev. Higher means steadier edges, lower means boom–bust.</li>
+                <li><span class="font-semibold text-amber-300">Trend Δ</span> compares last three events vs the three before that for directional momentum.</li>
+              </ul>
+            </div>
+
+            <!-- Data signature -->
+            <div class="card rounded-2xl p-3 sm:p-4 shadow-xl shadow-black/40">
+              <h3 class="text-sm font-semibold tracking-tight mb-2">Workbook wiring</h3>
+              <p class="text-[11px] text-slate-300 mb-2">
+                To update the stack:
+              </p>
+              <ol class="list-decimal list-inside text-[11px] text-slate-300 space-y-1.5">
+                <li>Update <span class="font-mono text-[10px] text-emerald-300">pvi_tourneys.xlsx</span> in the repo (same filename).</li>
+                <li>Commit & push. GitHub Pages serves the new file automatically.</li>
+                <li>Reload this page — the analyzer will re-scan the updated workbook.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-slate-800/80 bg-slate-950/90 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-500">
+        <div class="flex items-center gap-2">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+          <span>Runs entirely client-side. No data leaves the browser.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-slate-600">PVI = Relative Winnings ÷ Implied Odds</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Player detail modal -->
+  <div id="playerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm">
+    <div class="card max-w-lg w-full mx-4 rounded-2xl shadow-2xl shadow-black/60">
+      <div class="flex items-center justify-between px-4 py-3 border-b border-slate-700/80">
+        <h2 id="modalPlayerName" class="text-sm sm:text-base font-semibold"></h2>
+        <button id="modalCloseBtn" class="text-slate-400 hover:text-slate-200 text-sm px-1">✕</button>
+      </div>
+      <div class="px-4 pt-3 pb-4 space-y-3 text-[11px] text-slate-100">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="rounded-xl bg-emerald-500/10 px-3 py-2">
+            <div class="text-[10px] uppercase tracking-wide text-emerald-300/80">Avg PVI</div>
+            <div id="modalAvgPvi" class="text-lg font-semibold">–</div>
+          </div>
+          <div class="rounded-xl bg-indigo-500/10 px-3 py-2">
+            <div class="text-[10px] uppercase tracking-wide text-indigo-300/80">Volatility (StdDev)</div>
+            <div id="modalVolatility" class="text-lg font-semibold">–</div>
+          </div>
+          <div class="rounded-xl bg-amber-500/10 px-3 py-2">
+            <div class="text-[10px] uppercase tracking-wide text-amber-300/80">Consistency Index</div>
+            <div id="modalConsistency" class="text-lg font-semibold">–</div>
+          </div>
+          <div class="rounded-xl bg-rose-500/10 px-3 py-2">
+            <div class="text-[10px] uppercase tracking-wide text-rose-300/80">Trend Momentum</div>
+            <div id="modalTrend" class="text-lg font-semibold">–</div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-[11px] font-semibold text-slate-200">Event breakdown</h3>
+            <span id="modalEventsCount" class="text-[10px] text-slate-400"></span>
+          </div>
+          <div class="max-h-64 overflow-y-auto border border-slate-800/80 rounded-xl">
+            <table class="w-full text-[11px]">
+              <thead class="bg-slate-900/80 text-slate-400">
+                <tr>
+                  <th class="text-left px-2 py-1.5">Event</th>
+                  <th class="text-right px-2 py-1.5">PVI</th>
+                </tr>
+              </thead>
+              <tbody id="modalEventsBody" class="divide-y divide-slate-800/80"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Utility helpers ---
+    function mean(arr) {
+      if (!arr.length) return 0;
+      const sum = arr.reduce((a, b) => a + b, 0);
+      return sum / arr.length;
+    }
+
+    function stddev(arr) {
+      if (arr.length < 2) return 0;
+      const m = mean(arr);
+      const variance = mean(arr.map(x => (x - m) ** 2));
+      return Math.sqrt(variance);
+    }
+
+    function formatNumber(val, decimals = 2) {
+      if (val === null || val === undefined || isNaN(val)) return '–';
+      return val.toFixed(decimals);
+    }
+
+    // Dataset status UI bindings
+    const datasetStatusDot = document.getElementById('datasetStatusDot');
+    const datasetStatusLabel = document.getElementById('datasetStatusLabel');
+    const datasetSubStatus = document.getElementById('datasetSubStatus');
+    const datasetMeta = document.getElementById('datasetMeta');
+    const recalcBtn = document.getElementById('recalcBtn');
+    const sortSelect = document.getElementById('sortSelect');
+
+    function setStatusLoading(message = 'Loading workbook…') {
+      datasetStatusDot.className = 'h-1.5 w-1.5 rounded-full bg-amber-400';
+      datasetStatusLabel.textContent = 'Loading';
+      datasetSubStatus.textContent = message;
+      datasetMeta.textContent = 'Parsing /pvi_tourneys.xlsx';
+      recalcBtn.disabled = true;
+    }
+
+    function setStatusReady(metaText = '') {
+      datasetStatusDot.className = 'h-1.5 w-1.5 rounded-full bg-emerald-400';
+      datasetStatusLabel.textContent = 'Ready';
+      datasetSubStatus.textContent = 'Workbook parsed and scored.';
+      datasetMeta.textContent = metaText || 'Live from /pvi_tourneys.xlsx';
+      recalcBtn.disabled = false;
+    }
+
+    function setStatusError(message = 'Unable to load workbook.') {
+      datasetStatusDot.className = 'h-1.5 w-1.5 rounded-full bg-rose-400';
+      datasetStatusLabel.textContent = 'Error';
+      datasetSubStatus.textContent = message;
+      datasetMeta.textContent = 'Check sheet name and file path.';
+      recalcBtn.disabled = false;
+    }
+
+    // Summary UI bindings
+    const summaryPlayers = document.getElementById('summaryPlayers');
+    const summaryEvents = document.getElementById('summaryEvents');
+    const summaryQuality = document.getElementById('summaryQuality');
+    const summaryQualityHint = document.getElementById('summaryQualityHint');
+    const summaryTopPlayer = document.getElementById('summaryTopPlayer');
+    const summaryTopPvi = document.getElementById('summaryTopPvi');
+    const summaryConsistentPlayer = document.getElementById('summaryConsistentPlayer');
+    const summaryConsistentMetric = document.getElementById('summaryConsistentMetric');
+
+    let currentPlayerStats = null;
+    let currentEvents = [];
+    let currentSortKey = 'totalPvi';
+
+    function updateSummary(playerStats) {
+      if (!playerStats || !playerStats.length) {
+        summaryPlayers.textContent = '–';
+        summaryEvents.textContent = '–';
+        summaryQuality.textContent = '–';
+        summaryQualityHint.textContent = 'No data loaded.';
+        summaryTopPlayer.textContent = '–';
+        summaryTopPvi.textContent = '–';
+        summaryConsistentPlayer.textContent = '–';
+        summaryConsistentMetric.textContent = '–';
+        return;
+      }
+
+      const numPlayers = playerStats.length;
+      const avgEvents = mean(playerStats.map(p => p.events));
+      const avgPvi = mean(playerStats.map(p => p.avgPvi));
+
+      summaryPlayers.textContent = numPlayers.toString();
+      summaryEvents.textContent = avgEvents
+        ? `Avg ${avgEvents.toFixed(1)} events per player`
+        : 'Events not detected';
+
+      summaryQuality.textContent = avgPvi ? avgPvi.toFixed(2) : '–';
+
+      let qualityBlurb = 'Field looks neutral at first glance.';
+      if (avgPvi >= 1.3) {
+        qualityBlurb = 'Field skewed toward big outlier performances.';
+      } else if (avgPvi >= 1.05) {
+        qualityBlurb = 'Healthy amount of positive value captured.';
+      } else if (avgPvi >= 0.9) {
+        qualityBlurb = 'Fair-to-slightly thin on standout value.';
+      } else {
+        qualityBlurb = 'Overall returns look below expectation.';
+      }
+      summaryQualityHint.textContent = qualityBlurb;
+
+      const topTotal = playerStats[0];
+      summaryTopPlayer.textContent = topTotal.name;
+      summaryTopPvi.textContent = `Total PVI ${topTotal.totalPvi.toFixed(2)} across ${topTotal.events} events`;
+
+      const sortedByConsistency = [...playerStats]
+        .filter(p => p.events >= 4)
+        .sort((a,b)=>b.consistencyIndex-a.consistencyIndex);
+
+      if (sortedByConsistency.length) {
+        const mostConsistent = sortedByConsistency[0];
+        summaryConsistentPlayer.textContent = mostConsistent.name;
+        summaryConsistentMetric.textContent =
+          `CI ${mostConsistent.consistencyIndex.toFixed(2)} on Avg ${mostConsistent.avgPvi.toFixed(2)}`;
+      } else {
+        summaryConsistentPlayer.textContent = 'Need more reps';
+        summaryConsistentMetric.textContent = 'CI requires ~4+ events per player.';
+      }
+    }
+
+    function sortPlayersInPlace() {
+      if (!currentPlayerStats) return;
+      currentPlayerStats.sort((a, b) => {
+        switch (currentSortKey) {
+          case 'avgPvi':
+            return b.avgPvi - a.avgPvi;
+          case 'volatility':
+            return b.volatility - a.volatility;
+          case 'consistencyIndex':
+            return b.consistencyIndex - a.consistencyIndex;
+          case 'trendMomentum':
+            return b.trendMomentum - a.trendMomentum;
+          case 'events':
+            return b.events - a.events;
+          case 'totalPvi':
+          default:
+            return b.totalPvi - a.totalPvi;
+        }
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('playersBody');
+      tbody.innerHTML = '';
+      if (!currentPlayerStats) return;
+
+      sortPlayersInPlace();
+
+      currentPlayerStats.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+
+        const rowBg = idx === 0
+          ? 'bg-emerald-500/10 ring-1 ring-emerald-400/40'
+          : idx < 5
+          ? 'bg-slate-900/80 ring-1 ring-slate-700/60'
+          : 'bg-slate-950/70 ring-1 ring-slate-800/70';
+
+        tr.className = rowBg + ' hover:bg-slate-900/90 transition-colors cursor-pointer';
+
+        const tdName = document.createElement('td');
+        tdName.className = 'px-2 py-2 text-left font-medium text-[11px]';
+        tdName.textContent = p.name;
+        tr.appendChild(tdName);
+
+        const tdGte1 = document.createElement('td');
+        tdGte1.className = 'px-2 py-2 text-right';
+        if (p.countGte1 > 0) {
+          tdGte1.innerHTML =
+            `<span class="inline-flex items-center justify-end gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              ${p.countGte1}
+            </span>`;
+        } else {
+          tdGte1.innerHTML = '<span class="text-slate-500">–</span>';
+        }
+        tr.appendChild(tdGte1);
+
+        const tdTotal = document.createElement('td');
+        tdTotal.className = 'px-2 py-2 text-right font-semibold';
+        tdTotal.textContent = formatNumber(p.totalPvi, 2);
+        tr.appendChild(tdTotal);
+
+        const tdAvg = document.createElement('td');
+        tdAvg.className = 'px-2 py-2 text-right';
+        const avgClass = p.avgPvi >= 2
+          ? 'text-emerald-300'
+          : p.avgPvi >= 1.25
+          ? 'text-emerald-200'
+          : p.avgPvi >= 0.8
+          ? 'text-slate-200'
+          : 'text-slate-400';
+        tdAvg.innerHTML = `<span class="${avgClass}">${formatNumber(p.avgPvi, 2)}</span>`;
+        tr.appendChild(tdAvg);
+
+        const tdVol = document.createElement('td');
+        tdVol.className = 'px-2 py-2 text-right text-slate-300';
+        tdVol.textContent = formatNumber(p.volatility, 2);
+        tr.appendChild(tdVol);
+
+        const tdCons = document.createElement('td');
+        tdCons.className = 'px-2 py-2 text-right';
+        const ciClass = p.consistencyIndex >= 1.1
+          ? 'text-emerald-300'
+          : p.consistencyIndex >= 0.7
+          ? 'text-emerald-200'
+          : p.consistencyIndex >= 0.4
+          ? 'text-slate-200'
+          : 'text-slate-400';
+        tdCons.innerHTML = `<span class="${ciClass}">${formatNumber(p.consistencyIndex, 2)}</span>`;
+        tr.appendChild(tdCons);
+
+        const tdTrend = document.createElement('td');
+        tdTrend.className = 'px-2 py-2 text-right';
+        const trendClass = p.trendMomentum >= 0.5
+          ? 'text-emerald-300'
+          : p.trendMomentum >= 0.1
+          ? 'text-emerald-200'
+          : p.trendMomentum <= -0.5
+          ? 'text-rose-300'
+          : p.trendMomentum <= -0.1
+          ? 'text-rose-200'
+          : 'text-slate-300';
+        const sign = p.trendMomentum > 0 ? '+' : '';
+        tdTrend.innerHTML = `<span class="${trendClass}">${sign}${formatNumber(p.trendMomentum, 2)}</span>`;
+        tr.appendChild(tdTrend);
+
+        const tdEvents = document.createElement('td');
+        tdEvents.className = 'px-2 py-2 text-right text-slate-300';
+        tdEvents.textContent = p.events.toString();
+        tr.appendChild(tdEvents);
+
+        // Click handler for modal
+        tr.addEventListener('click', () => openPlayerModal(p));
+
+        tbody.appendChild(tr);
+      });
+
+      updateSummary(currentPlayerStats);
+      const metaText = `${currentEvents.length} events · ${currentPlayerStats.length} players`;
+      setStatusReady(metaText);
+    }
+
+    // Modal logic
+    const playerModal = document.getElementById('playerModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalPlayerName = document.getElementById('modalPlayerName');
+    const modalAvgPvi = document.getElementById('modalAvgPvi');
+    const modalVolatility = document.getElementById('modalVolatility');
+    const modalConsistency = document.getElementById('modalConsistency');
+    const modalTrend = document.getElementById('modalTrend');
+    const modalEventsCount = document.getElementById('modalEventsCount');
+    const modalEventsBody = document.getElementById('modalEventsBody');
+
+    function openPlayerModal(player) {
+      modalPlayerName.textContent = player.name;
+      modalAvgPvi.textContent = formatNumber(player.avgPvi, 2);
+      modalVolatility.textContent = formatNumber(player.volatility, 2);
+      modalConsistency.textContent = formatNumber(player.consistencyIndex, 2);
+      modalTrend.textContent = formatNumber(player.trendMomentum, 2);
+      modalEventsCount.textContent = `${player.events} events`;
+
+      modalEventsBody.innerHTML = '';
+      const eventsSorted = [...player.eventsDetail].sort((a,b)=>a.event.localeCompare(b.event));
+      eventsSorted.forEach(ev => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-900/80';
+        const tdEvent = document.createElement('td');
+        tdEvent.className = 'px-2 py-1.5 text-left';
+        tdEvent.textContent = ev.event;
+        const tdPvi = document.createElement('td');
+        tdPvi.className = 'px-2 py-1.5 text-right';
+        tdPvi.textContent = formatNumber(ev.pvi, 2);
+        tr.appendChild(tdEvent);
+        tr.appendChild(tdPvi);
+        modalEventsBody.appendChild(tr);
+      });
+
+      playerModal.classList.remove('hidden');
+      playerModal.classList.add('flex');
+    }
+
+    function closePlayerModal() {
+      playerModal.classList.add('hidden');
+      playerModal.classList.remove('flex');
+    }
+
+    modalCloseBtn.addEventListener('click', closePlayerModal);
+    playerModal.addEventListener('click', (e) => {
+      if (e.target === playerModal) closePlayerModal();
+    });
+
+    // --- Core processing: takes sheet (2D array) and fills currentPlayerStats ---
+    function processSheet(sheet) {
+      if (!sheet || !sheet.length) {
+        setStatusError('Sheet is empty.');
+        currentPlayerStats = null;
+        renderTable();
+        return;
+      }
+
+      const headerRow = sheet[0];
+      const dataRows = sheet.slice(1);
+
+      const events = [];
+      const eventColumns = [];
+
+      for (let i = 0; i < headerRow.length; i++) {
+        const header = (headerRow[i] || '').toString().trim();
+        if (header && header !== 'PVI') {
+          const pviColIdx = i + 1;
+          if (pviColIdx < headerRow.length && (headerRow[pviColIdx] || '').toString().trim() === 'PVI') {
+            events.push(header);
+            eventColumns.push({ nameCol: i, pviCol: pviColIdx, eventName: header });
+          }
+        }
+      }
+
+      const playerMap = new Map();
+
+      for (const row of dataRows) {
+        if (!row) continue;
+        for (const evt of eventColumns) {
+          const name = (row[evt.nameCol] || '').toString().trim();
+          const pviVal = parseFloat(row[evt.pviCol]);
+          if (!name || isNaN(pviVal)) continue;
+
+          if (!playerMap.has(name)) {
+            playerMap.set(name, {
+              name,
+              pvis: [],
+              eventsDetail: []
+            });
+          }
+          const p = playerMap.get(name);
+          p.pvis.push(pviVal);
+          p.eventsDetail.push({ event: evt.eventName, pvi: pviVal });
+        }
+      }
+
+      const players = Array.from(playerMap.values());
+
+      const playerStats = players.map(p => {
+        const eventsCount = p.pvis.length;
+        const totalPvi = p.pvis.reduce((a, b) => a + b, 0);
+        const avgPvi = eventsCount ? totalPvi / eventsCount : 0;
+        const volatility = stddev(p.pvis);
+        const consistencyIndex = volatility > 0 ? avgPvi / volatility : 0;
+
+        const sortedPvis = [...p.pvis].sort((a,b)=>a-b);
+        const last3 = sortedPvis.slice(-3);
+        const prev3 = sortedPvis.slice(-6, -3);
+        const last3Avg = last3.length ? mean(last3) : 0;
+        const prev3Avg = prev3.length ? mean(prev3) : 0;
+        const trendMomentum = last3Avg - prev3Avg;
+
+        const countGte1 = p.pvis.filter(v => v >= 1).length;
+
+        return {
+          name: p.name,
+          pvis: p.pvis,
+          events: eventsCount,
+          totalPvi,
+          avgPvi,
+          volatility,
+          consistencyIndex,
+          trendMomentum,
+          countGte1,
+          eventsDetail: p.eventsDetail
+        };
+      });
+
+      currentEvents = events;
+      currentPlayerStats = playerStats;
+      sortPlayersInPlace();
+      renderTable();
+    }
+
+    // --- File upload handler (still works, just hidden) ---
+    document.getElementById('fileInput')?.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      setStatusLoading('Reading local .xlsx file…');
+
+      const reader = new FileReader();
+      reader.onload = event => {
+        try {
+          const data = new Uint8Array(event.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = 'Tourneys';
+          const ws = workbook.Sheets[sheetName] || workbook.Sheets[workbook.SheetNames[0]];
+          if (!ws) {
+            setStatusError(`No sheet named "${sheetName}" found.`);
+            return;
+          }
+          const sheet = XLSX.utils.sheet_to_json(ws, { header: 1 });
+          processSheet(sheet);
+        } catch (err) {
+          console.error(err);
+          setStatusError('Error parsing uploaded workbook.');
+        }
+      };
+      reader.onerror = () => {
+        setStatusError('Unable to read uploaded file.');
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    // --- Auto-load from pvi_tourneys.xlsx in the repo ---
+    async function loadWorkbookFromRepo() {
+      try {
+        setStatusLoading('Fetching /pvi_tourneys.xlsx from GitHub Pages…');
+        const res = await fetch('pvi_tourneys.xlsx');
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const arrayBuf = await res.arrayBuffer();
+        const wb = XLSX.read(arrayBuf, { type: 'array' });
+        const sheetName = 'Tourneys';
+        const ws = wb.Sheets[sheetName] || wb.Sheets[wb.SheetNames[0]];
+        if (!ws) {
+          setStatusError(`No sheet named "${sheetName}" found in pvi_tourneys.xlsx`);
+          return;
+        }
+        const sheet = XLSX.utils.sheet_to_json(ws, { header: 1 });
+        processSheet(sheet);
+      } catch (err) {
+        console.error('Error loading default workbook from repo:', err);
+        setStatusError('Could not load pvi_tourneys.xlsx from repo.');
+      }
+    }
+
+    // Recalc button triggers re-load from repo
+    recalcBtn.addEventListener('click', () => {
+      loadWorkbookFromRepo();
+    });
+
+    // Sort select
+    sortSelect.addEventListener('change', (e) => {
+      currentSortKey = e.target.value;
+      renderTable();
+    });
+
+    // Kick off auto-load on page ready
+    window.addEventListener('load', () => {
+      loadWorkbookFromRepo();
+    });
+  </script>
+</body>
+</html>
