@@ -1,0 +1,1470 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seamless Point of Care | Healthcare IT Integration Experts</title>
+  <meta name="description" content="Seamless Point of Care handles evaluation, installation, cable management, and lifecycle support for point-of-care hardware in hospitals and clinics. We take care of you, so you can take care of them." />
+  <style>
+    :root {
+      --primary-blue: #0056b3;
+      --dark-blue: #002a4d;
+      --accent-blue: #e6f0fa;
+      --accent-soft: #f4f7fc;
+      --text-dark: #1a202c;
+      --text-gray: #4a5568;
+      --white: #ffffff;
+      --bg-light: #f7fafc;
+      --border-radius: 12px;
+      --container-width: 1120px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 8px 20px rgba(15,23,42,0.14);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-dark);
+      line-height: 1.6;
+      background-color: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(0,86,179,0.06);
+      color: var(--primary-blue);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary-blue);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, var(--primary-blue));
+      color: var(--white);
+      box-shadow: 0 10px 20px rgba(37,99,235,0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(30,64,175,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary-blue);
+      border-color: rgba(0,86,179,0.4);
+    }
+
+    .btn-outline:hover {
+      background: rgba(0,86,179,0.05);
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--dark-blue);
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 4vw, 3.4rem);
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    h3 { font-size: 1.35rem; margin-bottom: 0.6rem; }
+    p { font-size: 1rem; color: var(--text-gray); margin-bottom: 1.1rem; }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 900;
+      font-size: 1.25rem;
+      letter-spacing: -0.05em;
+      color: var(--dark-blue);
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 0 0, #60a5fa, var(--primary-blue));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 18px rgba(37,99,235,0.4);
+    }
+
+    .logo-text-accent { color: var(--primary-blue); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a { font-weight: 600; color: var(--text-gray); }
+    .nav-links a:hover { color: var(--primary-blue); }
+
+    .nav-cta { padding: 8px 18px; font-size: 0.85rem; }
+
+    /* Hero */
+    .hero {
+      padding: 72px 0 80px;
+      background:
+        radial-gradient(circle at top left, #eff6ff 0, transparent 55%),
+        radial-gradient(circle at top right, #e0f2fe 0, transparent 55%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-subtitle {
+      max-width: 520px;
+      margin-bottom: 20px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-meta-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .hero-card {
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      box-shadow: var(--shadow-md);
+      padding: 20px 20px 18px;
+    }
+
+    .hero-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--primary-blue);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .hero-room {
+      margin-top: 14px;
+      background: linear-gradient(135deg, #f9fafb, #eff6ff);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 14px;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .hero-wall {
+      height: 140px;
+      border-radius: 14px;
+      background:
+        linear-gradient(180deg, #e5edff 0, #e5edff 60%, #cbd5f5 60%, #cbd5f5 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mount {
+      position: absolute;
+      top: 24px;
+      left: 20px;
+      width: 140px;
+      height: 80px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      box-shadow: 0 10px 18px rgba(15,23,42,0.55);
+    }
+
+    .hero-mount-screen {
+      position: absolute;
+      inset: 8px 10px 16px;
+      border-radius: 10px;
+      background: radial-gradient(circle at top left, #38bdf8, #1d4ed8);
+    }
+
+    .hero-bed {
+      position: absolute;
+      right: 18px;
+      bottom: 14px;
+      width: 110px;
+      height: 30px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      box-shadow: 0 8px 12px rgba(148,163,184,0.55);
+    }
+
+    .hero-bed-top {
+      position: absolute;
+      inset: -8px 10px 10px;
+      border-radius: 999px;
+      background: #f9fafb;
+    }
+
+    .hero-cabling {
+      height: 90px;
+      border-radius: 12px;
+      background: #020617;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-rows: repeat(3,1fr);
+      gap: 6px;
+    }
+
+    .hero-cable-row {
+      display: grid;
+      grid-template-columns: 5fr 3fr 3fr;
+      gap: 6px;
+    }
+
+    .hero-cable {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+    }
+
+    .hero-cable-muted {
+      background: linear-gradient(90deg, #4b5563, #9ca3af);
+    }
+
+    .hero-footnote {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #64748b;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-tagline-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(34,197,94,0.08);
+      color: #16a34a;
+      font-weight: 600;
+      font-size: 0.78rem;
+      margin-right: 6px;
+    }
+
+    /* Stats */
+    .stats {
+      margin-top: 18px;
+    }
+
+    .stats-bar {
+      background: linear-gradient(120deg, var(--dark-blue), #0b1220);
+      border-radius: 18px;
+      padding: 24px 26px;
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 22px;
+      color: var(--white);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.5);
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #bfdbfe;
+      margin-bottom: 2px;
+    }
+
+    .stat-note {
+      font-size: 0.8rem;
+      color: #cbd5f5;
+    }
+
+    /* Section headers */
+    .section-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 40px;
+    }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 18px;
+      border: 1px solid #e2e8f0;
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(59,130,246,0.7);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: rgba(37,99,235,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+
+    .service-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.78rem;
+      color: #4b5563;
+      background: #f8fafc;
+    }
+
+    .pill-strong {
+      border-color: rgba(37,99,235,0.3);
+      color: #1d4ed8;
+      background: #eff6ff;
+    }
+
+    .usecase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap: 10px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .usecase-pill {
+      padding: 9px 12px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #475569;
+    }
+
+    .usecase-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(37,99,235,0.6);
+    }
+
+    /* Pillars */
+    .pillars {
+      border-top: 1px solid #e2e8f0;
+      margin-top: 36px;
+      padding-top: 32px;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap: 16px;
+      font-size: 0.9rem;
+    }
+
+    .pillar-card {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .pillar-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    /* Feature / procurement */
+    .feature-section {
+      background: var(--bg-light);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.2fr) minmax(0,1.1fr);
+      gap: 60px;
+      align-items: center;
+    }
+
+    .feature-list {
+      margin-top: 10px;
+      font-size: 0.96rem;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--text-gray);
+    }
+
+    .bullet {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 2px solid #22c55e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .bullet-inner {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .mini-card-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .mini-metrics {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    .metric-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .metric-value {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    /* Process */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 24px;
+      margin-top: 22px;
+    }
+
+    /* Testimonials */
+    .testimonial-section {
+      background: #f8fafc;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 22px;
+    }
+
+    .testimonial-card {
+      background: #ffffff;
+      border-radius: 18px;
+      border: 1px solid #e5e7eb;
+      padding: 22px 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quote-mark {
+      font-size: 2rem;
+      color: #d1d5db;
+      line-height: 1;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      font-size: 0.86rem;
+    }
+
+    .author-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .author-role {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* CTA / contact */
+    .cta-shell {
+      padding-bottom: 0;
+    }
+
+    .cta-inner {
+      background: linear-gradient(135deg, #1d4ed8, var(--dark-blue));
+      color: #e5edff;
+      border-radius: 22px;
+      padding: 34px 24px 26px;
+      display: grid;
+      grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+      gap: 28px;
+      align-items: center;
+      box-shadow: 0 20px 50px rgba(15,23,42,0.75);
+    }
+
+    .cta-title { color: #f9fafb; margin-bottom: 8px; }
+    .cta-text { font-size: 0.96rem; color: #dbeafe; max-width: 420px; }
+
+    .cta-tagline {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #bfdbfe;
+    }
+
+    .cta-tagline span {
+      color: #e0f2fe;
+      font-weight: 700;
+    }
+
+    .contact-form {
+      background: #020617;
+      border-radius: 16px;
+      padding: 16px 14px;
+      border: 1px solid rgba(148,163,184,0.6);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .form-group { margin-bottom: 8px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 3px;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      padding: 8px 9px;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #6b7280;
+    }
+
+    .form-textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 1px rgba(96,165,250,0.7);
+    }
+
+    .form-note {
+      font-size: 0.72rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    /* Footer */
+    footer {
+      background: #020617;
+      color: #9ca3af;
+      padding: 72px 0 30px;
+      margin-top: 70px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0,2fr) repeat(3,minmax(0,1.1fr));
+      gap: 26px;
+      border-bottom: 1px solid #111827;
+      padding-bottom: 20px;
+      margin-bottom: 14px;
+      font-size: 0.86rem;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .footer-logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 11px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-logo-text {
+      font-weight: 800;
+      color: #e5edff;
+      letter-spacing: -0.04em;
+    }
+
+    .footer-col h4 {
+      color: #e5edff;
+      font-size: 0.86rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .footer-col ul li { margin-bottom: 6px; }
+    .footer-col a:hover { color: #e5edff; }
+
+    .footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .footer-meta strong { color: #e5edff; }
+
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .hero-grid,
+      .feature-grid,
+      .cta-inner,
+      .footer-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .hero { padding-top: 48px; }
+      .hero-grid { gap: 32px; }
+      .stats-bar {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        row-gap: 18px;
+      }
+      footer { margin-top: 50px; }
+    }
+
+    @media (max-width: 720px) {
+      .section { padding: 64px 0; }
+      .stats-bar { grid-template-columns: minmax(0,1fr); }
+      .cta-inner { padding: 24px 18px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="14" rx="3" fill="#eff6ff" />
+            <rect x="6" y="7" width="12" height="2" rx="1" fill="#1d4ed8" />
+            <rect x="6" y="11" width="10" height="2" rx="1" fill="#1d4ed8" />
+            <rect x="6" y="15" width="7" height="2" rx="1" fill="#1d4ed8" />
+          </svg>
+        </div>
+        <span>Seamless</span>
+        <span class="logo-text-accent">POC</span>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#procurement">Solution & procurement</a></li>
+          <li><a href="#process">How we work</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact" class="btn btn-primary nav-cta">Schedule project</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Healthcare IT integration
+          </div>
+          <h1>We take care of you, so you can take care of them.</h1>
+          <p class="hero-subtitle">
+            Seamless Point of Care designs, installs, and maintains point of care hardware, from carts and wall mounts to cable paths, so clinicians get clean, reliable workspaces and leaders hit their go live dates.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Start a project conversation</a>
+            <a href="#process" class="btn btn-outline">See how our Seamless Technicians work</a>
+
+          </div>
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <span class="hero-meta-dot"></span>
+              <span>100 percent healthcare focused</span>
+            </div>
+            <div class="hero-meta-item">
+              <span>Thousands of point of care installs</span>
+            </div>
+            <div class="hero-meta-item">
+              <span>Hospitals, IDNs, clinics, specialty units</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="hero-card" aria-hidden="true">
+  <div style="margin-bottom:14px;">
+    <div class="hero-pill">How Seamless Operates</div>
+    <div style="font-size:0.82rem;color:#6b7280;margin-top:4px;">
+      The physical layer of healthcare IT, delivered with precision.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:18px;margin-top:6px;">
+
+    <!-- STEP 1 -->
+    <div style="
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      padding:14px 12px;
+      border-radius:14px;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+    ">
+      <div style="
+        width:36px;
+        height:36px;
+        border-radius:12px;
+        background:#eff6ff;
+        color:#2563eb;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:700;
+        font-size:1rem;
+      ">1</div>
+
+      <div>
+        <div style="font-weight:700;color:#1e293b;font-size:1rem;">Evaluate</div>
+        <div style="font-size:0.9rem;color:#64748b;">
+          Walkthroughs, measurements, workflow conversations, hardware recommendations.
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div style="
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      padding:14px 12px;
+      border-radius:14px;
+      background:#f0f7ff;
+      border:1px solid #dbeafe;
+    ">
+      <div style="
+        width:36px;
+        height:36px;
+        border-radius:12px;
+        background:#dbeafe;
+        color:#1d4ed8;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:700;
+        font-size:1rem;
+      ">2</div>
+
+      <div>
+        <div style="font-weight:700;color:#1e293b;font-size:1rem;">Install</div>
+        <div style="font-size:0.9rem;color:#64748b;">
+          Quiet, respectful technicians. Clean cabling, clinical-ready rooms, zero dangling cords.
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div style="
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      padding:14px 12px;
+      border-radius:14px;
+      background:#eefdf4;
+      border:1px solid #bbf7d0;
+    ">
+      <div style="
+        width:36px;
+        height:36px;
+        border-radius:12px;
+        background:#bbf7d0;
+        color:#15803d;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:700;
+        font-size:1rem;
+      ">3</div>
+
+      <div>
+        <div style="font-weight:700;color:#1e293b;font-size:1rem;">Support</div>
+        <div style="font-size:0.9rem;color:#64748b;">
+          Adjustments, maintenance, lifecycle work, and future expansion planning.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:16px;text-align:center;font-size:0.82rem;color:#64748b;">
+    Your rooms. Cleaner, safer, and ready for care.
+  </div>
+</div>
+
+            <div class="hero-footnote">
+              <div>
+                <span class="hero-tagline-pill">Seamless Technicians</span>
+Quiet, respectful installs, full clean up, no dangling cords.
+              </div>
+              <div>Eval, design, install, and lifecycle support.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="container stats">
+        <div class="stats-bar">
+          <div>
+            <div class="stat-label">Experience</div>
+            <div class="stat-number">20+ years</div>
+            <div class="stat-note">Point of care hardware, clinical workflow, and cable management.</div>
+          </div>
+          <div>
+            <div class="stat-label">Install volume</div>
+            <div class="stat-number">1,000s</div>
+            <div class="stat-note">Workstations, carts, tracking boards, and clinical mounts installed.</div>
+          </div>
+          <div>
+            <div class="stat-label">Healthcare focus</div>
+            <div class="stat-number">100%</div>
+            <div class="stat-note">Hospitals, IDNs, and clinics, no generic commercial work.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge">
+            <span class="badge-dot"></span>
+            What we do
+          </div>
+          <h2>Complete point of care solutions, from wall plate to workstation.</h2>
+          <p>
+            We bridge the gap between IT plans and clinical reality, designing, installing, and supporting hardware in real patient rooms, not just on paper.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <div class="card">
+            <div class="service-icon">🔧</div>
+            <h3>Expert installation</h3>
+            <p>
+              Factory trained technicians who understand hospitals. We mount workstations, carts, cabinets, and tracking boards with minimal disruption to care.
+            </p>
+            <div class="service-meta">
+              <span class="pill">Evenings and weekends available</span>
+              <span class="pill">Multi facility rollouts</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="service-icon">🔌</div>
+            <h3>Cable and hardware management</h3>
+            <p>
+              No tangles, no loops, no trip hazards. We right size cables, stow hardware, and keep floors clear and walls clean in a way that respects infection control.
+            </p>
+            <div class="service-meta">
+              <span class="pill">Infection control friendly</span>
+              <span class="pill">Housekeeping aware layouts</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="service-icon">📈</div>
+            <h3>Clinical workflow alignment</h3>
+            <p>
+              We watch how clinicians move, document, and interact with patients, then place technology so it supports the visit instead of fighting it.
+            </p>
+            <div class="service-meta">
+              <span class="pill">Bedside EMR</span>
+              <span class="pill">Labor and delivery</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="service-icon">🛡️</div>
+            <h3>Lifecycle and asset protection</h3>
+            <p>
+              Carts and mounts should keep performing like day one. We plan maintenance, repairs, and refresh work so your investment lasts longer.
+            </p>
+            <div class="service-meta">
+              <span class="pill">Scheduled maintenance</span>
+              <span class="pill">Asset protection plans</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="service-icon">🎯</div>
+            <h3>Go live support</h3>
+            <p>
+              Tight timelines, fixed dates, limited downtime. We coordinate with IS, clinical, and construction groups so your go live stays on track.
+            </p>
+            <div class="service-meta">
+              <span class="pill">Project based</span>
+              <span class="pill">Multi phase rollouts</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="service-icon">🏥</div>
+            <h3>Specialty and ancillary areas</h3>
+            <p>
+              Anesthesia carts, surgery boards, ICUs, clinics, conference rooms, and digital signage, we tailor hardware layouts for each department.
+            </p>
+            <div class="service-meta">
+              <span class="pill">Surgery and anesthesia</span>
+              <span class="pill">Clinics and imaging</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:0.86rem;color:#6b7280;margin-top:24px;margin-bottom:6px;">
+          Where we typically help
+        </p>
+        <div class="usecase-grid">
+          <div class="usecase-pill">
+            <span>Bedside EMR workstations</span><span class="usecase-dot"></span>
+          </div>
+          <div class="usecase-pill">
+            <span>Labor and delivery rooms</span><span class="usecase-dot"></span>
+          </div>
+          <div class="usecase-pill">
+            <span>Anesthesia and surgery carts</span><span class="usecase-dot"></span>
+          </div>
+          <div class="usecase-pill">
+            <span>Clinic exam rooms</span><span class="usecase-dot"></span>
+          </div>
+          <div class="usecase-pill">
+            <span>Tracking boards and signage</span><span class="usecase-dot"></span>
+          </div>
+          <div class="usecase-pill">
+            <span>Conference and command centers</span><span class="usecase-dot"></span>
+          </div>
+        </div>
+
+        <div class="pillars">
+          <p style="font-size:0.86rem;color:#6b7280;margin-bottom:10px;">
+            How clients describe working with Seamless
+          </p>
+          <div class="pillars-grid">
+            <div class="pillar-card">
+              <div class="pillar-title">Expertise</div>
+              <div>Decades of experience with carts, mounts, and clinical spaces, we speak both IS and bedside.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-title">Confidence</div>
+              <div>Quiet, respectful teams who understand privacy, infection control, and sensitive environments.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-title">Transparency</div>
+              <div>Clear scope, fixed pricing, and few change orders. You know what is happening and when.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-title">Commitment</div>
+              <div>We align with your go live dates and keep projects moving even when constraints change.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-title">Customization</div>
+              <div>No two facilities are the same. We tailor layouts, hardware, and cabling to each site.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCUREMENT / SOLUTION FINDING + PROCESS -->
+    <section id="procurement" class="section feature-section">
+      <div class="container">
+        <div class="feature-grid">
+          <div>
+            <div class="badge">
+              <span class="badge-dot"></span>
+              Solution finding and procurement
+            </div>
+            <h2>One partner from idea to installed, clinical ready hardware.</h2>
+            <p>
+              You do not have to guess at carts, arms, or mounts. We evaluate your spaces, recommend hardware, install evaluation units so staff can try them, then bundle everything into one clear proposal.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <div class="bullet"><div class="bullet-inner"></div></div>
+                <div>Room by room evaluation and hardware recommendations based on clinical workflow.</div>
+              </li>
+              <li>
+                <div class="bullet"><div class="bullet-inner"></div></div>
+                <div>Evaluation units so nurses and providers can try the layout before you commit system wide.</div>
+              </li>
+              <li>
+                <div class="bullet"><div class="bullet-inner"></div></div>
+                <div>Single quote that can include product, materials, labor, and maintenance.</div>
+              </li>
+              <li>
+                <div class="bullet"><div class="bullet-inner"></div></div>
+                <div>We coordinate vendors and deliveries so nothing falls through the cracks.</div>
+              </li>
+            </ul>
+            <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="pill pill-strong">Fewer POs to manage</span>
+              <span class="pill">Hardware neutral recommendations</span>
+              <span class="pill">Aligned with capital cycles</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div class="mini-card-label">Sample project snapshot</div>
+              <h3 style="margin-bottom:4px;">Multi clinic EMR rollout</h3>
+              <p style="font-size:0.9rem;margin-bottom:6px;">
+                90 ambulatory clinics upgrading to wall mounted workstations and tracking boards.
+              </p>
+              <div class="mini-metrics">
+                <div>
+                  <div class="metric-label">Clinics</div>
+                  <div class="metric-value">90 locations</div>
+                </div>
+                <div>
+                  <div class="metric-label">Installed devices</div>
+                  <div class="metric-value">400+ workstations</div>
+                </div>
+              </div>
+              <div class="mini-metrics" style="margin-top:8px;">
+                <div>
+                  <div class="metric-label">Change orders</div>
+                  <div class="metric-value">Minimal</div>
+                </div>
+                <div>
+                  <div class="metric-label">Go live dates</div>
+                  <div class="metric-value">All met</div>
+                </div>
+              </div>
+              <p style="font-size:0.86rem;color:#4b5563;margin-top:10px;">
+                “They installed over 400 workstations across 90 clinics. The results were fantastic, our physicians and nurses are extremely happy with the setup.”
+              </p>
+              <div style="font-size:0.8rem;color:#6b7280;">RN Director of IS, academic health system</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="process" style="margin-top:64px;">
+          <div class="badge">
+  <span class="badge-dot"></span>
+  How our Seamless Technicians work
+</div>
+          <h2 style="margin-top:10px;max-width:520px;">
+            Designed for clinical spaces, delivered with minimal disruption.
+          </h2>
+          <p style="max-width:620px;">
+            Hospitals are not construction sites. We plan installs around patient care, infection control, and privacy, then leave rooms cleaner than we found them.
+          </p>
+
+          <div class="process-grid">
+            <div class="card">
+              <h3>1. Evaluate and design</h3>
+              <p>
+                Walkthroughs, measurements, and conversations with IS and clinical leaders to understand workflows, constraints, and goals.
+              </p>
+              <ul class="feature-list">
+                <li>
+                  <div class="bullet"><div class="bullet-inner"></div></div>
+                  <div>Room by room assessment and elevation plans.</div>
+                </li>
+                <li>
+                  <div class="bullet"><div class="bullet-inner"></div></div>
+                  <div>Hardware neutral recommendations that respect your standards.</div>
+                </li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>2. Install and clean up</h3>
+              <p>
+                Quiet, respectful work in sensitive areas. We protect surfaces, control dust, and haul away debris when we are done.
+              </p>
+              <ul class="feature-list">
+                <li>
+                  <div class="bullet"><div class="bullet-inner"></div></div>
+                  <div>Evening or weekend work windows when you need them.</div>
+                </li>
+                <li>
+                  <div class="bullet"><div class="bullet-inner"></div></div>
+                  <div>Rooms returned in clinical ready condition.</div>
+                </li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>3. Support and lifecycle</h3>
+              <p>
+                After go live, we stay available for adjustments, repairs, and refreshes so layouts keep working as your care models evolve.
+              </p>
+              <ul class="feature-list">
+                <li>
+                  <div class="bullet"><div class="bullet-inner"></div></div>
+                  <div>Maintenance visits and service calls.</div>
+                </li>
+                <li>
+                  <div class="bullet"><div class="bullet-inner"></div></div>
+                  <div>Planning for new units and future expansion.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="section testimonial-section">
+      <div class="container">
+        <div class="section-header" style="margin-bottom:30px;">
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Trusted by clinical and IS leaders
+          </div>
+          <h2>What healthcare teams say after working with Seamless.</h2>
+          <p>
+            When IT integration respects clinical workflows, you win fans across nursing, providers, and IS.
+          </p>
+        </div>
+
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <div class="quote-mark">“</div>
+            <p>
+              They installed over 400 workstations across 90 clinics. The results were fantastic, our physicians and nurses are extremely happy with the setup.
+            </p>
+            <div class="author">
+              <div class="author-avatar">MS</div>
+              <div>
+                <div style="font-weight:600;color:#111827;">RN Director of IS</div>
+                <div class="author-role">Academic medical center</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="quote-mark">“</div>
+            <p>
+              They faced unique challenges from management and physicians and still missed no deadlines. Their technical knowledge and flexibility were instrumental.
+            </p>
+            <div class="author">
+              <div class="author-avatar">DR</div>
+              <div>
+                <div style="font-weight:600;color:#111827;">IT Director</div>
+                <div class="author-role">Regional medical center</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="quote-mark">“</div>
+            <p>
+              They show a real understanding of the clinical environment. Their installations are professional, clean, and respectful of patient privacy and staff workflow.
+            </p>
+            <div class="author">
+              <div class="author-avatar">CG</div>
+              <div>
+                <div style="font-weight:600;color:#111827;">President</div>
+                <div class="author-role">Healthcare consulting firm</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA / CONTACT -->
+    <section id="contact" class="section cta-shell">
+      <div class="container">
+        <div class="cta-inner">
+          <div>
+            <h2 class="cta-title">Ready to streamline your next rollout?</h2>
+            <p class="cta-text">
+              Tell us about your facility or equipment needs. We will help you plan the solution, handle procurement, and manage the install so your teams can stay focused on care.
+            </p>
+            <p class="cta-tagline">
+              We take care of your hardware and cabling, <span>so you can take care of your patients.</span>
+            </p>
+          </div>
+          <div>
+            <form class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Full name</label>
+                  <input type="text" class="form-input" placeholder="Jane Doe" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Work email</label>
+                  <input type="email" class="form-input" placeholder="jane@hospital.org" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Organization</label>
+                <input type="text" class="form-input" placeholder="Health system or clinic name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">How can we help?</label>
+                <textarea class="form-textarea" placeholder="We need 50 mounts installed across three units..."></textarea>
+              </div>
+              <button type="button" class="btn btn-primary" style="width:100%;margin-top:6px;">
+                Send message
+              </button>
+              <div class="form-note">
+                Or reach us directly at <strong>support@seamlesspoc.com</strong> or <strong>1-800-555-0199</strong>.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <div class="footer-logo-mark">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="4" width="18" height="14" rx="3" fill="#0f172a" />
+                <rect x="6" y="7" width="12" height="2" rx="1" fill="#2563eb" />
+                <rect x="6" y="11" width="10" height="2" rx="1" fill="#2563eb" />
+                <rect x="6" y="15" width="7" height="2" rx="1" fill="#2563eb" />
+              </svg>
+            </div>
+            <span class="footer-logo-text">Seamless POC</span>
+          </div>
+          <p style="font-size:0.86rem;color:#9ca3af;max-width:320px;">
+            Making healthcare IT integration easy. We handle the physical layer of technology so you can focus on care.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Installation</a></li>
+            <li><a href="#services">Cable management</a></li>
+            <li><a href="#procurement">Solution finding</a></li>
+            <li><a href="#procurement">Lifecycle support</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#process">How we work</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li>support@seamlesspoc.com</li>
+            <li>1-800-555-0199</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <span>© 2025 <strong>Seamless Point of Care</strong>. All rights reserved.</span>
+        <span>Healthcare IT integration, point of care workstations, clean clinical spaces.</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
