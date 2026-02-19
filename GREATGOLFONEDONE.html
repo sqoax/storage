@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One & Done</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <main class="container">
+    
+    <header class="header">
+      <div class="logo-mark">O&D</div>
+      <h1 class="title">The League</h1>
+      <p class="subtitle">Weekly Selection & Standings</p>
+
+      <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQs22oFFItCqxK4oSjw68DRmVXovuv6PgKm7koaGsjj1eLoDWPoYMGIRB7CdV7P3z6Na9Tdara8D-SD/pubhtml" target="_blank" class="sheet-link">
+  View Season Standings & History
+</a>
+      
+    </header>
+
+    <div id="statusLine" class="status-pill warn">Loading league status...</div>
+
+    <div class="card glass">
+      
+      <form id="pickForm" class="pick-form">
+        <div class="input-group">
+          <label for="name">Member Name</label>
+          <input type="text" id="name" placeholder="Enter your surname" autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="input-group">
+          <label for="pick">Selection</label>
+          <input type="text" id="pick" placeholder="Golfer name" autocomplete="off" spellcheck="false">
+        </div>
+
+        <button type="submit" id="submitBtn" class="action-btn">
+          <span>Confirm Selection</span>
+        </button>
+      </form>
+
+      <div class="submitted-container">
+  <label class="submitted-label">Confirmed Entries This Week</label>
+  <div id="submittedList" class="member-pills-grid">
+    </div>
+</div>
+
+      <div id="picksBlock" class="hidden">
+        <div class="table-wrapper">
+          <table class="picks-table">
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Selection</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="picksRows">
+              </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="adminBlock" class="admin-panel hidden">
+  <div class="admin-controls">
+    <button id="adminKeyBtn" class="admin-btn">Auth</button>
+    <button id="revealBtn" class="admin-btn">Force Reveal</button>
+    <button id="resetBtn" class="admin-btn danger">Reset Week</button>
+  </div>
+  <div id="adminStatus" class="admin-status"></div>
+</div>
+
+  </main>
+
+  <div id="toast" class="toast hidden" hidden>Notification</div>
+ 
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
